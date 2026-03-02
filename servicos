@@ -1,0 +1,153 @@
+<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Serviços</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 8px 12px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .add-btn {
+      background: #4CAF50;
+      color: white;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .edit-btn {
+      background: #2196F3;
+      color: white;
+    }
+
+    .delete-btn {
+      background: #f44336;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Gerenciar Serviços</h2>
+    <form id="serviceForm">
+      <label for="servico">Serviço</label>
+      <input type="text" id="servico" placeholder="Digite o serviço" required>
+
+      <label for="valor">Valor (R$)</label>
+      <input type="number" id="valor" placeholder="Digite o valor" step="0.01" required>
+
+      <button type="submit" class="add-btn">Adicionar</button>
+    </form>
+
+   
+        <!-- Linhas serão adicionadas dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const form = document.getElementById('serviceForm');
+    const tableBody = document.querySelector('#serviceTable tbody');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const servico = document.getElementById('servico').value;
+      const valor = document.getElementById('valor').value;
+
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${servico}</td>
+        <td>R$ ${parseFloat(valor).toFixed(2)}</td>
+        <td>
+          <button class="edit-btn">Editar</button>
+          <button class="delete-btn">Excluir</button>
+        </td>
+      `;
+
+      tableBody.appendChild(row);
+
+      // Limpar campos
+      form.reset();
+
+      // Botão Excluir
+      row.querySelector('.delete-btn').addEventListener('click', () => {
+        row.remove();
+      });
+
+      // Botão Editar
+      row.querySelector('.edit-btn').addEventListener('click', () => {
+        document.getElementById('servico').value = servico;
+        document.getElementById('valor').value = valor;
+        row.remove();
+      });
+    });
+  </script>
+</body>
+</html>
